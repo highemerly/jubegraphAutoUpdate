@@ -44,10 +44,14 @@ $client =& new HTTP_Client();
 
 echo "Access to e-AMUSEMENT gate Login Page...\n";
 $client->get($eagateLoginURL); //ログインページにアクセス
-$eagateLoginArray = array( array("KID" => EAGATE_ID, "pass" => EAGATE_PASS), "OTP", "submit");
+$eagateLoginArray = array("KID" => EAGATE_ID, "pass" => EAGATE_PASS, "OTP" => "", "submit" => mb_convert_encoding("規約に同意してログイン","shift-jis","auto"));
 echo "Try to Login...\n";
 $client->post($eagateLoginURL,$eagateLoginArray); //ログイン（post）
-//echo $client->currentResponse();
+
+//$eagateLoginResult = $client->currentResponse();
+//$eagateLoginResult['body'] = mb_convert_encoding($eagateLoginResult['body'],"UTF-8","auto");
+//echo $eagateLoginResult['body'];
+
 echo "Login done.\n";
 
 //ページ読み込み
@@ -66,7 +70,7 @@ else{
 	die("Error: ただいま大変混み合っております｡申し訳ございませんがしばらくたってから再度お試しください｡");
 }
 
-for($i=1;$i<=4;$i++){
+for($i=1;$i<=5;$i++){
 	$eagateMusicURL = $eagateMusicURLBase.$i;	
 	echo "Access to Music Page ".$i."...\n";
 
@@ -88,6 +92,8 @@ echo "Success (e-AMUSEMENT gate).\n";
 
 //****ここからjubegraph****
 
+
+
 echo "Access to jubegraph TOP Page...\n";
 $client->get($jubegraphTopURL); //ログインページにアクセス
 $jubegraphFile = array(
@@ -95,7 +101,8 @@ $jubegraphFile = array(
 	array('musicData1', $jubegraphFid."m1.html", "text/html"),
 	array('musicData2', $jubegraphFid."m2.html", "text/html"),
 	array('musicData3', $jubegraphFid."m3.html", "text/html"),
-	array('musicData4', $jubegraphFid."m4.html", "text/html")
+	array('musicData4', $jubegraphFid."m4.html", "text/html"),
+	array('musicData5', $jubegraphFid."m5.html", "text/html")
 	);
 
 echo "Try to submit to jubegraph...\n";
